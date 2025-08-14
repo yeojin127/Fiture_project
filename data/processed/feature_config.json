@@ -1,0 +1,71 @@
+{
+  "id_cols": [
+    "date"
+  ],
+  "target": "ConditionLabel",
+  "features": [
+    {
+      "name": "PM10",
+      "type": "numerical",
+      "unit": "µg/m³",
+      "desc": "미세먼지 농도 (낮을수록 좋음)"
+    },
+    {
+      "name": "Temp",
+      "type": "numerical",
+      "unit": "°C",
+      "desc": "평균 기온 (18~24℃ 쾌적)"
+    },
+    {
+      "name": "Humidity",
+      "type": "numerical",
+      "unit": "%",
+      "desc": "상대 습도 (40~60% 쾌적)"
+    },
+    {
+      "name": "SleepTime",
+      "type": "numerical",
+      "unit": "hours",
+      "desc": "수면 시간 (7~8시간 권장)"
+    },
+    {
+      "name": "ActivityTime",
+      "type": "numerical",
+      "unit": "hours",
+      "desc": "활동/운동 시간"
+    },
+    {
+      "name": "Caffeine",
+      "type": "numerical",
+      "unit": "cups",
+      "desc": "카페인 섭취량(잔) (적을수록 좋음)"
+    },
+    {
+      "name": "PhoneTime",
+      "type": "numerical",
+      "unit": "hours",
+      "desc": "휴대폰 사용 시간 (적을수록 좋음)"
+    },
+    {
+      "name": "MoodScore",
+      "type": "numerical",
+      "unit": "points",
+      "desc": "사용자 입력 기분 점수(0~100)"
+    }
+  ],
+  "aux": {
+    "score_name": "ConditionScore",
+    "score_range": [
+      0,
+      100
+    ],
+    "labeling_mode": "auto->quantile",
+    "absolute_cut": "<50→1, 50-59→2, 60-69→3, 70-79→4, ≥80→5",
+    "rebalance_rule": "if any class <10% or >40%, switch to quantile(20/40/60/80)",
+    "split": {
+      "test_size": 0.2,
+      "random_state": 20250814,
+      "stratify": true
+    }
+  }
+}
