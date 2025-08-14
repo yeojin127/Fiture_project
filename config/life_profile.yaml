@@ -1,0 +1,13 @@
+directions:
+  phone: -1
+  caffeine: -1
+  activity: +1
+  environment: -1
+
+coeff:
+  phone: 0.25
+  caffeine: 0.18
+  activity_pos: 0.12
+  activity_neg: 0.02
+  environment: 0.30
+  sleep_debt: 0.25
