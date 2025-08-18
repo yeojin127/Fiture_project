@@ -1,13 +1,188 @@
-directions:
-  phone: -1
-  caffeine: -1
-  activity: +1
-  environment: -1
 
-coeff:
-  phone: 0.25
-  caffeine: 0.18
-  activity_pos: 0.12
-  activity_neg: 0.02
-  environment: 0.30
-  sleep_debt: 0.25
+version: 1
+seed: 42
+
+# 공통 기본값(가중치/범위/노이즈). 프로파일이 여기서 필요한 것만 override
+defaults:
+  # --- 효과 가중치(논문 기반 방향/크기 유지) ---
+  k_phone: 0.25          # phone 1h ↑ -> sleep 0.25h ↓
+  k_caf: 0.18            # caffeine 1 cup ↑ -> sleep 0.18h ↓
+  k_act_p: 0.12          # moderate activity 1h ↑ -> sleep 0.12h ↑
+  k_act_n: 0.02          # over activity penalty
+  k_env: 0.30            # env_stress 1 ↑ -> sleep 0.30h ↓
+  k_debt: 0.25           # sleep debt 1h -> next-day sleep 0.25h ↑
+
+  # --- 기분 점수 계수(기본 60점에서 가감) ---
+  mood_sleep_gain_per_h: 6.0
+  mood_activity_gain_per_h: 1.5
+  mood_caffeine_penalty_per_cup: -1.0
+  mood_env_penalty_per_unit: -5.0
+  mood_phone_penalty_per_h: -0.6
+
+  # --- 환경 스트레스 산식 가중치 ---
+  env_weights:
+    pm_weight: 0.33          # PM10 표준화 가중
+    temp_weight: 0.34        # |T-21| 편차 가중
+    hum_weight: 0.33         # |H-45| 편차 가중
+    temp_comfort_c: 21       # 기준 21°C
+    hum_comfort_pct: 45      # 기준 45%
+
+  # --- 초기/경계/노이즈(분포·경계는 프로파일별로 주로 바꿈) ---
+  bases:
+    sleep_base_h: 7.2
+    phone_base_h: 3.8
+    activity_base_h: 5.0
+    caffeine_base_cups_min: 0
+    caffeine_base_cups_max: 4
+  noise:
+    sleep_noise_h: 0.6
+    mood_noise_pts: 6
+    phone_noise_h: 1.0
+    activity_noise_h: 1.6
+  bounds:
+    sleep_min_h: 4
+    sleep_max_h: 10
+    phone_min_h: 0
+    phone_max_h: 12
+    activity_min_h: 0
+    activity_max_h: 12
+    caffeine_min_cups: 0
+    caffeine_max_cups: 6
+
+  # --- 상호작용 규칙 ---
+  rules:
+    # 스트레스↑ → phone += gain, activity -= drop
+    phone_stress_gain_h: 0.4
+    activity_stress_drop_h: 0.5
+    # 전날 sleep_debt > 1.5h → 오늘 카페인 0~1잔 덜 마심
+    caffeine_reduce_if_debt_gt_h: 1.5
+    caffeine_reduce_range_cups: [0, 1]
+    # 활동 과다 임계치(초과분에 k_act_n 적용)
+    over_activity_threshold_h: 7.0
+
+  # --- 라벨링(등급 경계 값은 프로젝트 규칙에 맞춰 사용) ---
+  labeling:
+    # 예시) 총점 또는 규칙 기반 라벨링에 쓰는 임계들(필요 시 수정)
+    # 여기선 합성만 담당하므로 구체 임계는 코드 측에 둬도 OK
+    use_rule_based: true
+
+# -----------------------------
+# 프로파일(유형)별 설정
+# rows: 합성할 행 수
+# -----------------------------
+profiles:
+  - name: weekend_bonus_sleep
+    rows: 1000
+    overrides:
+      k_phone: 0.22
+      k_debt: 0.35
+      bases:
+        phone_base_h: 4.5
+        activity_base_h: 3.5
+      noise:
+        sleep_noise_h: 0.7
+      # 주말형은 활동의 기분 가중을 완만하게
+      mood_activity_gain_per_h: 1.0
+
+  - name: deadline_high_stress
+    rows: 1000
+    overrides:
+      k_env: 0.40
+      k_caf: 0.22
+      rules:
+        phone_stress_gain_h: 0.7
+        activity_stress_drop_h: 0.8
+      bases:
+        caffeine_base_cups_min: 1
+        caffeine_base_cups_max: 5
+        phone_base_h: 4.2
+        activity_base_h: 4.2
+      noise:
+        sleep_noise_h: 0.7
+
+  - name: caffeine_sensitive
+    rows: 1000
+    overrides:
+      k_caf: 0.30
+      bases:
+        caffeine_base_cups_min: 0
+        caffeine_base_cups_max: 2
+      # 카페인에 기분도 더 민감
+      mood_caffeine_penalty_per_cup: -1.5
+
+  - name: owl_chronotype
+    rows: 1000
+    overrides:
+      bases:
+        sleep_base_h: 6.6
+        phone_base_h: 5.0
+        activity_base_h: 4.2
+      k_debt: 0.30
+      noise:
+        sleep_noise_h: 0.8
+
+  - name: env_sensitive_season
+    rows: 1000
+    overrides:
+      k_env: 0.35
+      env_weights:
+        pm_weight: 0.33
+        temp_weight: 0.37
+        hum_weight: 0.30
+        temp_comfort_c: 21
+        hum_comfort_pct: 45
+      # 환경 스트레스가 기분에 더 큰 영향
+      mood_env_penalty_per_unit: -6.0
+      noise:
+        sleep_noise_h: 0.7
+      rules:
+        phone_stress_gain_h: 0.6
+        activity_stress_drop_h: 0.7
+
+  - name: weekday_baseline
+    rows: 1000
+    overrides:
+      # 기본형은 defaults 그대로 쓰되 노이즈 명시
+      noise:
+        sleep_noise_h: 0.6
+        mood_noise_pts: 6
+      # 가중치는 기본 유지
+      k_phone: 0.25
+      k_caf: 0.18
+      k_act_p: 0.12
+      k_act_n: 0.02
+      k_env: 0.30
+      k_debt: 0.25
+
+# ---------------------------------
+# 생성기(코드)에서 참고할 산식 메모
+# ---------------------------------
+notes:
+  sleep_formula: >
+    sleep = clamp(
+      sleep_base
+      - k_phone * phone
+      - k_caf * caffeine
+      + k_act_p * activity
+      - k_act_n * max(0, activity - over_activity_threshold)
+      - k_env * env_stress
+      + k_debt * sleep_debt
+      + Normal(0, sleep_noise),
+      [sleep_min, sleep_max]
+    )
+  mood_formula: >
+    mood = clamp(
+      60
+      + mood_sleep_gain_per_h * (sleep - 7)
+      + mood_activity_gain_per_h * activity
+      + mood_caffeine_penalty_per_cup * caffeine
+      + mood_env_penalty_per_unit * env_stress
+      + mood_phone_penalty_per_h * phone
+      + Normal(0, mood_noise),
+      [0, 100]
+    )
+  env_stress_formula: >
+    env_stress =
+      pm_weight * pm_std
+      + temp_weight * abs(temp_c - temp_comfort_c)
+      + hum_weight * abs(hum_pct - hum_comfort_pct)
