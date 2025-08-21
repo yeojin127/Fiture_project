@@ -59,7 +59,7 @@
 |     ├── model.onnx | ONNX 변환 결과 |
 |     └── openvino_ir/ | OpenVINO IR (xml, bin) |
 | **src/** | 주요 파이프라인 코드 |
-| ├── data/ | 전처리 및 라벨링 |
+| ├── labeling/ | 전처리 및 라벨링 |
 | │   ├── preprocess.py | 전처리/병합 함수 |
 | │   └── label_split.py | 라벨링 + train/val/test 분리 |
 | ├── model/ | 학습 및 추론 |
