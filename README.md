@@ -53,7 +53,7 @@
 | │   ├── train.csv | 학습 데이터 (80%) |
 | │   ├── val.csv | 검증 데이터 (10%) |
 | │   └── test.csv | 최종 테스트 데이터 (10%) |
-| └── model/ | 학습된 모델 및 추론용 파일 |
+| └── models/ | 학습된 모델 및 추론용 파일 |
 |     ├── model_lgbm.txt | LightGBM 모델 파일 |
 |     ├── model.pkl | Joblib 저장 모델 |
 |     ├── model.onnx | ONNX 변환 결과 |
@@ -62,7 +62,7 @@
 | ├── labeling/ | 전처리 및 라벨링 |
 | │   ├── preprocess.py | 전처리/병합 함수 |
 | │   └── label_split.py | 라벨링 + train/val/test 분리 |
-| ├── model/ | 학습 및 추론 |
+| ├── model_train/ | 학습 및 추론 |
 | │   ├── train.py | 모델 학습 |
 | │   ├── infer.py | LightGBM + OpenVINO 추론 |
 | │   ├── shap_utils.py | SHAP 기여도 해석 |
