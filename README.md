@@ -71,7 +71,7 @@
 | ├── coach/ | 피드백 로직 (feedback) |
 | │   ├── coach.py | Top3 팩터 선정 + 행동 추천 |
 | │   ├── card_builder.py | build_card 함수 (등급/행동/음식/경고 조합) |
-| |   └── pipeline.py | 모델+예측+피드백연결 (ui에 바로 연결) |
+| │   └── pipeline.py | 모델+예측+피드백연결 (ui에 바로 연결) |
 | └── ui/ | 사용자 인터페이스 |
 |     ├── main_ui.py | PySide6 앱 실행 |
 |     └── components.py | 카드 위젯 등 UI 컴포넌트 |
