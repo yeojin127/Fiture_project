@@ -60,13 +60,14 @@
 |     └── openvino_ir/ | OpenVINO IR (xml, bin) |
 | **src/** | 주요 파이프라인 코드 |
 | ├── labeling/ | 전처리 및 라벨링 |
-| │   ├── preprocess.py | 전처리/병합 함수 |
+| │   ├── build_datasets.py | 전체 병합 |
+| │   ├── merge_env.py | 온도,습도,미세먼지 병합 |
+| │   ├── synth_merge.py | 생활데이터 합성 생성 |
 | │   └── label_split.py | 라벨링 + train/val/test 분리 |
 | ├── model_train/ | 학습 및 추론 |
-| │   ├── train.py | 모델 학습 |
 | │   ├── infer.py | LightGBM + OpenVINO 추론 |
-| │   ├── shap_utils.py | SHAP 기여도 해석 |
-| │   └── tune_optuna.py | Optuna 하이퍼파라미터 튜닝 |
+| │   ├── run_pipeline.py | LightGBM 학습 및 ONNX -> IR 변환 |
+| │   └── shap_utils.py | SHAP 기여도 해석 |
 | ├── coach/ | 피드백 로직 (feedback) |
 | │   ├── coach.py | Top3 팩터 선정 + 행동 추천 |
 | │   ├── card_builder.py | build_card 함수 (등급/행동/음식/경고 조합) |
@@ -75,11 +76,9 @@
 |     ├── main_ui.py | PySide6 앱 실행 |
 |     └── components.py | 카드 위젯 등 UI 컴포넌트 |
 | **reports/** | 학습 결과 리포트 |
-| ├── metrics.json | 정확도 및 메트릭 |
-| ├── confusion_matrix.png | 혼동행렬 |
+| ├── cross_validate.py | K-Fold 교차검증 |
+| ├── evaluate_model.py | 검증(Val) |
 | └── optuna_best.txt | 최적 하이퍼파라미터 |
-| **tests/** | 단위 테스트 |
-| └── test_coach.py | coach 모듈 테스트 |
 | **`README.md`**               | 프로젝트 개요 및 설명 |
 
 
