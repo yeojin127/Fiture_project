@@ -1,0 +1,53 @@
+# =========================
+# Python 기본
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# =========================
+# 가상환경
+# =========================
+.venv/
+.venv*/
+.venv*/
+.env/
+.env*/
+.env*/
+.ovc/  
+
+# =========================
+# Jupyter / VSCode
+# =========================
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# =========================
+# 데이터 / 모델 아웃풋
+# =========================
+data/raw/
+data/processed/*.csv
+!data/processed/README.md   # 설명 파일은 예외적으로 추적
+
+models/
+checkpoints/
+logs/
+reports/*.log
+
+# =========================
+# OS 자동 생성 파일
+# =========================
+.DS_Store
+Thumbs.db
+
+
+text/
+logo/
+ppt/
