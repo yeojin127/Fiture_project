@@ -29,22 +29,22 @@ class TodayInputPage(QWidget):
         content_layout.setContentsMargins(25, 25, 25, 25)
         content_layout.setSpacing(25)
 
-        self.sleep_input, layout1 = self.create_input_field("Yesterday's Sleep Time", "hh:mm:ss",
-                                                            "Enter the time you slept yesterday")
-        self.activity_input, layout2 = self.create_input_field("Yesterday's Activity Time", "hh:mm:ss",
-                                                               "Enter the duration of your activity yesterday")
-        self.phone_input, layout3 = self.create_input_field("Yesterday's Phone Usage Time", "hh:mm:ss",
-                                                            "Enter the amount of time spent on your phone")
-        self.caffeine_input, layout4 = self.create_input_field("Yesterday's Caffeine Intake", "Number of coffee cups",
-                                                               "How many cups of coffee did you drink?")
-        self.mood_input, layout5 = self.create_input_field("Today's Morning Mood Score", "1 - 100",
-                                                           "Rate your mood from 1 to 100")
-        self.temp_input, layout6 = self.create_input_field("Today's Temperature(°C)", "Temperature in °C",
-                                                           "What is the current temperature?")
-        self.humidity_input, layout7 = self.create_input_field("Today's Humidity(%)", "Humidity in %",
-                                                               "What is the current humidity level?")
-        self.pm10_input, layout8 = self.create_input_field("Today's Air Quality(Fine Dust Level)", "Fine dust level",
-                                                           "What is the current air quality level?")
+        self.sleep_input, layout1 = self.create_input_field("몇 시간 정도 주무셨나요?", "hh:mm:ss",
+                                                            "시간, 분, 초를 정확하게 입력해주세요.")
+        self.activity_input, layout2 = self.create_input_field("어제 활동(운동, 외출 등)은 얼마나 하셨나요?", "hh:mm:ss",
+                                                               "시간, 분, 초를 정확하게 입력해주세요.")
+        self.phone_input, layout3 = self.create_input_field("어제 핸드폰은 얼마나 사용하셨나요?", "hh:mm:ss",
+                                                            "시간, 분, 초를 정확하게 입력해주세요.")
+        self.caffeine_input, layout4 = self.create_input_field("어제 커피, 에너지 음료를 몇 잔 드셨나요?", "Number of coffee cups",
+                                                               "카페인이 함류된 음료의 잔 수를 입력해주세요.")
+        self.mood_input, layout5 = self.create_input_field("오늘의 아침 컨디션은 몇 점인가요?", "1 - 100",
+                                                           "1부터 100까지의 숫자를 입력해주세요.")
+        self.temp_input, layout6 = self.create_input_field("오늘의 예상 평균 기온은 몇 도인가요?", "Temperature in °C",
+                                                           "온도(°C)를 숫자로 입력해주세요.")
+        self.humidity_input, layout7 = self.create_input_field("오늘의 습도는 몇 %인가요?", "Humidity in %",
+                                                               "습도(%)를 숫자로 입력해주세요.")
+        self.pm10_input, layout8 = self.create_input_field("오늘의 미세먼지(PM10) 수치는 얼마인가요?", "Fine dust level",
+                                                           "미세먼지(PM10)를 숫자로 입력해주세요.")
 
         for layout in [layout1, layout2, layout3, layout4, layout5, layout6, layout7, layout8]:
             content_layout.addLayout(layout)
