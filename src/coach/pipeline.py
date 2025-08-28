@@ -1,9 +1,15 @@
 # src/pipeline.py
 from typing import Dict, List, Tuple, Optional
 import numpy as np
+import os
+import sys
 
-from model.infer import load_model, predict_grade_and_proba
-from model.shap_utils import build_explainer_for_expected_grade, shap_penalties_for_sample
+current_dir = os.path.dirname(__file__)
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.append(parent_dir)
+
+from model_train.infer import load_model, predict_grade_and_proba
+from model_train.shap_utils import build_explainer_for_expected_grade, shap_penalties_for_sample
 from coach.coach import select_top3_factors_by_contrib
 from coach.card_builder import get_library, build_card
 
