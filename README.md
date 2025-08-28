@@ -73,12 +73,15 @@
 | │   ├── card_builder.py | build_card 함수 (등급/행동/음식/경고 조합) |
 | │   └── pipeline.py | 모델+예측+피드백연결 (ui에 바로 연결) |
 | └── ui/ | 사용자 인터페이스 |
-|     ├── main_ui.py | PySide6 앱 실행 |
-|     └── components.py | 카드 위젯 등 UI 컴포넌트 |
+|     ├── main_ui.py | PySide6 main |
+|     ├── home_ui.py | PySide6 home 페이지 |
+|     ├── login_ui.py | PySide6 login 페이지 |
+|     ├── result_ui.py | PySide6 result 페이지 |
+|     └── today_ui.py | PySide6 today 페이지 |
 | **reports/** | 학습 결과 리포트 |
 | ├── cross_validate.py | K-Fold 교차검증 |
 | ├── evaluate_model.py | 검증(Val) |
-| └── optuna_best.txt | 최적 하이퍼파라미터 |
+| └── ov_ir_parity_check.py | IR 검증 |
 | **`README.md`**               | 프로젝트 개요 및 설명 |
 
 
