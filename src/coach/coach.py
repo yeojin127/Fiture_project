@@ -3,14 +3,14 @@ from typing import List, Tuple, Dict
 
 # 변수명 → 팩터 키 매핑(방향은 '기대등급↑ = 나빠짐' 가정)
 VAR_TO_FACTOR = {
-    "sleep_time": "sleep_low",
-    "caffeine": "caffeine_high",
-    "phone_time": "phone_high",
-    "activity_time": "activity_low",
-    "pm10": "pm_high",
-    "mood_score": "mood_low",
-    "temp": "temp_high",
-    "humidity": "humid_high",
+    "SleepTime": "sleep_low",
+    "Caffeine": "caffeine_high",
+    "PhoneTime": "phone_high",
+    "ActivityTime": "activity_low",
+    "PM10": "pm_high",
+    "MoodScore": "mood_low",
+    "Temp": "temp_high",
+    "Humidity": "humid_high",
 }
 
 def select_top3_factors_by_contrib(
